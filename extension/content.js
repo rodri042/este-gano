@@ -20,23 +20,19 @@ const load = () => {
 	});
 };
 
-const encode = (key, get, set, offset = 0) => {
+const encode = (e, key, get, set) => {
 	if (!isOn) return;
 
-	if (key === " ") {
-		const content = get();
-		const words = content.split(" ");
-
-		const lastWord = words[words.length - 1 + offset];
-		if (!lastWord) return;
-
-		const start = content.slice(0, content.lastIndexOf(lastWord));
-		set(start + encoder.encode(lastWord));
+	if (key === "]") {
+		e.preventDefault();
+		const content = get() + "]";
+		set(encoder.encode(content));
 	}
 };
 
 const inputListener = (e) => {
 	encode(
+		e,
 		e.key,
 		() => e.target.value || "",
 		(value) => {
@@ -48,14 +44,13 @@ const inputListener = (e) => {
 const editableListener = (e) => {
 	setTimeout(() => {
 		encode(
+			e,
 			e.key,
 			() => e.target.textContent || "",
 			(value) => {
-				value += " ";
 				e.target.textContent = value;
 				setCaretPosition(e.target, value.length);
-			},
-			-1
+			}
 		);
 	});
 };
