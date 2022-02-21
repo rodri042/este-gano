@@ -1,6 +1,8 @@
 # éste-ganó
 
-`// TODO: Description`
+[Steganography](https://en.wikipedia.org/wiki/Steganography) toy that encodes secrets messages in strings by using zero-width Unicode characters.
+
+See [src/encoder.spec.js]
 
 # Developing
 
