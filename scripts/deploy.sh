@@ -3,7 +3,7 @@
 . ./scripts/try.sh
 
 USERNAME="rodri042"
-REPO_NAME="éste-ganó"
+REPO_NAME="este-gano"
 
 TOKEN="$1"
 REPO="https://$USERNAME:$TOKEN@github.com/$USERNAME/$REPO_NAME"

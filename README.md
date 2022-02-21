@@ -2,7 +2,7 @@
 
 [Steganography](https://en.wikipedia.org/wiki/Steganography) toy that encodes secrets messages in strings by using zero-width Unicode characters.
 
-See [src/encoder.spec.js]
+See [encoder.spec.js](src/encoder.spec.js)
 
 # Developing
 
