@@ -1,8 +1,23 @@
 # éste-ganó
 
-[Steganography](https://en.wikipedia.org/wiki/Steganography) toy that encodes secrets messages in strings by using zero-width Unicode characters.
+[Steganography](https://en.wikipedia.org/wiki/Steganography) toy that encodes secret messages in strings by using zero-width Unicode characters.
 
 See [encoder.spec.js](src/encoder.spec.js)
+
+## Usage
+
+### Web version
+
+https://rodri042.github.io/este-gano/
+
+### Chrome extension
+
+- Download the extension from the [Releases](https://github.com/rodri042/jeringozo/releases) section
+- Open any chat app
+- Enable the extension by using the button
+- Type `![this syntax]` to add secret messages
+- Type `![!]` to decode all secret messages on the screen
+- The extension will execute the commands after typing a space character
 
 # Developing
 
