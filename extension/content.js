@@ -8,6 +8,8 @@ const encoder = window.encoder.default;
 chrome.runtime.sendMessage({ action: "request-status" }, updateStatus);
 chrome.runtime.onMessage.addListener(updateStatus);
 
+const CHARACTER = " ";
+
 const load = () => {
 	document.querySelectorAll("input, textarea").forEach((input) => {
 		input.removeEventListener("keypress", inputListener);
@@ -20,19 +22,17 @@ const load = () => {
 	});
 };
 
-const encode = (e, key, get, set) => {
+const encode = (key, get, set) => {
 	if (!isOn) return;
 
-	if (key === "]") {
-		e.preventDefault();
-		const content = get() + "]";
+	if (key === CHARACTER) {
+		const content = get();
 		set(encoder.encode(content));
 	}
 };
 
 const inputListener = (e) => {
 	encode(
-		e,
 		e.key,
 		() => e.target.value || "",
 		(value) => {
@@ -44,7 +44,6 @@ const inputListener = (e) => {
 const editableListener = (e) => {
 	setTimeout(() => {
 		encode(
-			e,
 			e.key,
 			() => e.target.textContent || "",
 			(value) => {
