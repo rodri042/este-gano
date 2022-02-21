@@ -2,7 +2,7 @@ const MARKER = "\u2062"; // INVISIBLE TIMES
 const SEPARATOR = "\u2060"; // WORD JOINER
 const ZERO = "\u200b"; // ZERO WIDTH SPACE
 const ONE = "\u200c"; // ZERO WIDTH NON-JOINER
-const ENCODED_FORMAT = /\u2062([^\u2062]*)\u2062/g;
+export const ENCODED_FORMAT = /\u2062([^\u2062]*)\u2062/g;
 export const DECODED_FORMAT = /!\[([^\]\u2062\u2060\u200b\u200c]*)\]/g;
 
 export default {

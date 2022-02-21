@@ -3,12 +3,14 @@ const updateStatus = (it) => {
 	isOn = it;
 	load();
 };
-const encoder = window.encoder.default;
+
+const { ENCODED_FORMAT, DECODED_FORMAT, default: encoder } = window.encoder;
+const HIGHLIGHT_COLOR = "#FF0000";
+const TRANSLATE_SEQUENCE = "![!]";
+const CHARACTER = " ";
 
 chrome.runtime.sendMessage({ action: "request-status" }, updateStatus);
 chrome.runtime.onMessage.addListener(updateStatus);
-
-const CHARACTER = " ";
 
 const load = () => {
 	document.querySelectorAll("input, textarea").forEach((input) => {
@@ -22,12 +24,30 @@ const load = () => {
 	});
 };
 
+const translateAllNodes = () => {
+	textNodes = [
+		...document.querySelectorAll("span"),
+		...document.querySelectorAll("div")
+	]
+		.filter((node) => ENCODED_FORMAT.test(node.innerHTML))
+		.forEach((node) => {
+			node.innerHTML = encoder
+				.decode(node.innerHTML)
+				.replace(
+					DECODED_FORMAT,
+					(__, secret) =>
+						`<span style="color: ${HIGHLIGHT_COLOR}">${secret}</span>`
+				);
+		});
+};
+
 const encode = (key, get, set) => {
 	if (!isOn) return;
 
 	if (key === CHARACTER) {
 		const content = get();
-		set(encoder.encode(content));
+		if (content.includes(TRANSLATE_SEQUENCE)) translateAllNodes();
+		else set(encoder.encode(content));
 	}
 };
 
