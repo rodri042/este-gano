@@ -1,0 +1,52 @@
+body {
+	margin: 0;
+	padding: 10px 10px 10px 10px;
+	line-height: 40px;
+
+	background-color: #000000;
+	color: white;
+	word-break: break-word;
+}
+
+html,
+body,
+pre,
+code,
+kbd,
+samp {
+	font-family: "Press Start 2P";
+}
+
+h1 {
+	text-align: center;
+	color: #297cf2;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+a {
+	color: #a5b6db;
+}
+
+.input {
+	width: stretch;
+	min-height: 100px;
+	margin-bottom: 10px;
+	resize: none;
+}
+
+.output {
+	white-space: pre-wrap;
+	background-color: #262626;
+	border-radius: 8px;
+	padding: 0px 10px;
+}
+
+.message {
+	font-size: x-small;
+	color: gray;
+	text-align: center;
+}
