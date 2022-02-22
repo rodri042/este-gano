@@ -1,16 +1,9 @@
-let isOn = false;
-const updateStatus = (it) => {
-	isOn = it;
-	load();
-};
-
 const { ENCODED_FORMAT, DECODED_FORMAT, default: encoder } = window.encoder;
-const HIGHLIGHT_COLOR = "#FF0000";
-const TRANSLATE_SEQUENCE = "![!]";
-const CHARACTER = " ";
+const HIGHLIGHT_TEXT_COLOR = "#000000";
+const HIGHLIGHT_BACK_COLOR = "#FF000088";
 
-chrome.runtime.sendMessage({ action: "request-status" }, updateStatus);
-chrome.runtime.onMessage.addListener(updateStatus);
+const observer = new MutationObserver(() => load());
+observer.observe(document, { childList: true, subtree: true });
 
 const load = () => {
 	document.querySelectorAll("input, textarea").forEach((input) => {
@@ -22,13 +15,14 @@ const load = () => {
 		div.removeEventListener("keypress", editableListener);
 		div.addEventListener("keypress", editableListener);
 	});
+
+	translateAllNodes();
 };
 
 const translateAllNodes = () => {
-	textNodes = [
-		...document.querySelectorAll("span"),
-		...document.querySelectorAll("div")
-	]
+	[...document.querySelectorAll("span"), ...document.querySelectorAll("div")]
+		.filter((node) => node.children.length === 0)
+		.filter((node) => node.contentEditable !== "true")
 		.filter((node) => ENCODED_FORMAT.test(node.innerHTML))
 		.forEach((node) => {
 			node.innerHTML = encoder
@@ -36,24 +30,19 @@ const translateAllNodes = () => {
 				.replace(
 					DECODED_FORMAT,
 					(__, secret) =>
-						`<span style="color: ${HIGHLIGHT_COLOR}">${secret}</span>`
+						`<span style="color: ${HIGHLIGHT_TEXT_COLOR}; background-color: ${HIGHLIGHT_BACK_COLOR}">${secret}</span>`
 				);
 		});
 };
 
-const encode = (key, get, set) => {
-	if (!isOn) return;
+const encode = (get, set) => {
+	const content = get();
 
-	if (key === CHARACTER) {
-		const content = get();
-		if (content.includes(TRANSLATE_SEQUENCE)) translateAllNodes();
-		else set(encoder.encode(content));
-	}
+	if (DECODED_FORMAT.test(content)) set(encoder.encode(content));
 };
 
 const inputListener = (e) => {
 	encode(
-		e.key,
 		() => e.target.value || "",
 		(value) => {
 			e.target.value = value;
@@ -64,7 +53,6 @@ const inputListener = (e) => {
 const editableListener = (e) => {
 	setTimeout(() => {
 		encode(
-			e.key,
 			() => e.target.textContent || "",
 			(value) => {
 				e.target.textContent = value;

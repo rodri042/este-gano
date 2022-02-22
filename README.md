@@ -16,8 +16,7 @@ https://rodri042.github.io/este-gano/
 - Open any chat app
 - Enable the extension by using the button
 - Type `![this syntax]` to add secret messages
-- Type `![!]` to decode all secret messages on the screen
-- The extension will execute the commands after typing a space character
+- When the extension is installed, you'll see secret messages highlighted in red
 
 # Developing
 
