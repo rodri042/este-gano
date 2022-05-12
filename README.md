@@ -12,7 +12,7 @@ https://rodri042.github.io/este-gano/
 
 ### Chrome extension
 
-- Download the extension from the [Releases](https://github.com/rodri042/jeringozo/releases) section
+- Download the extension from the [Releases](https://github.com/rodri042/este-gano/releases) section
 - Open any chat app
 - Enable the extension by using the button
 - Type `![this syntax]` to add secret messages
